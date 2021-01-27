@@ -31,7 +31,7 @@ class DeviceMonitorByGstreamer:
                 cmd_id(str): command to get serial of each usb device
         """
         self.cmd = "v4l2-ctl --list-devices"
-        self.cmd_id = "ls -l /dev/v4l/by-id"
+        self.cmd_id = "ls -l /devices/v4l/by-id"
 
     def get_device_list(self):
         """
@@ -65,7 +65,7 @@ class DeviceMonitorByGstreamer:
                 lst = line.split(' ')
                 name = ''.join(lst[-3].split('-')[1:-2])
                 deviceId = lst[-1]
-                deviceId = deviceId.replace('../../', '/dev/')
+                deviceId = deviceId.replace('../../', '/devices/')
                 devices[name] = deviceId
         return devices
 
@@ -136,11 +136,12 @@ def main(opt: Options):
         if metadata[METADATA_KEY] != device_list:
             lprint("change device status: ", device_list)
             metadata = {METADATA_KEY: device_list}
-            # output after kanban
-            conn.output_kanban(
-                connection_key="streaming",
-                metadata=metadata,
-            )
+            for serial, device_id in device_list.items():
+                # output after kanban
+                conn.output_kanban(
+                    connection_key=device_id.split('/')[-1],
+                    metadata={METADATA_KEY: {serial: device_id}},
+                )
         sleep(EXECUTE_INTERVAL)
         try: 
             with UpdateDeviceStateToDB() as my:
