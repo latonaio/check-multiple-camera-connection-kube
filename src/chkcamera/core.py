@@ -7,7 +7,7 @@
     tell this result via kanban or database
 """
 
-from aion.microservice import main_decorator, Options
+from aion.microservice import main_decorator, Options, WITHOUT_KANBAN
 from aion.logger import lprint
 import aion.mysql as mysql
 from time import sleep
@@ -122,12 +122,10 @@ class UpdateDeviceStateToDB(mysql.BaseMysqlAccess):
         self.set_query(sql, args)
 
 
-@main_decorator(SERVICE_NAME)
+@main_decorator(SERVICE_NAME, WITHOUT_KANBAN)
 def main(opt: Options):
     conn = opt.get_conn()
     num = opt.get_number()
-    # get cache kanban
-    kanban = conn.set_kanban(SERVICE_NAME, num)
 
     dm = DeviceMonitorByGstreamer()
     metadata = {METADATA_KEY: {}}
