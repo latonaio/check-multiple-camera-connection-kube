@@ -21,6 +21,13 @@ check-multiple-camera-connection-kubeはAIONのプラットフォーム上での
 - Kubernetes   
 - AION   
 
+`v4l2-ctl`コマンドがない場合は以下を実行して入手してください。
+
+Debian系OSの場合
+```
+sudo apt install v4l-utils
+```
+
 # セットアップ
 このリポジトリをクローンし、makeコマンドを用いてDocker container imageのビルドを行ってください。   
 ```
