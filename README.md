@@ -1,11 +1,8 @@
 # check-multiple-camera-connection-kube
-check-multiple-camera-connection-kubeは、USBで接続されたカメラ情報を検出します。
-
-# 概要
-本サービスは、USBで接続されている複数のカメラの接続情報を取得し、他マイクロサービスへ配信します。
-
-配信はkanbanもしくはデータベースを通じて行われます。
-*DBを通じた配信は現在非推奨になっております
+check-multiple-camera-connection-kubeは、主にエッジコンピューティング環境において、USBで接続されたカメラ情報を検出するマイクロサービスです。  
+check-multiple-camera-connection-kubeは、USBで接続されている複数のカメラの接続情報を取得し、他マイクロサービスへ配信します。  
+配信はkanbanもしくはデータベースを通じて行われます。  
+*DBを通じた配信は現在非推奨になっております  
 
 配信されるデータは下記の二種類です。
 
@@ -15,18 +12,12 @@ check-multiple-camera-connection-kubeは、USBで接続されたカメラ情報�
 デバイスのリストは`v4l2-ctl`コマンドを使用して取得されます。
 
 # 動作環境
-check-multiple-camera-connection-kubeはAIONのプラットフォーム上での動作を前提としています。 使用する際は、事前にAIONの動作環境を用意してください。   
-- OS: Linux   
-- CPU: Intel64/AMD64/ARM64   
-- Kubernetes   
+check-multiple-camera-connection-kubeはAIONのプラットフォーム上での動作を前提としています。  
+使用する際は、事前にAIONの動作環境を用意してください。   
+- OS: Linux OS     
+- CPU: ARM/AMD/Intel   
+- Kubernetes     
 - AION   
-
-`v4l2-ctl`コマンドがない場合は以下を実行して入手してください。
-
-Debian系OSの場合
-```
-sudo apt install v4l-utils
-```
 
 # セットアップ
 このリポジトリをクローンし、makeコマンドを用いてDocker container imageのビルドを行ってください。   
